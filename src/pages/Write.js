@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import { useDispatch } from "react-redux";
-import { __getTodos } from "../redux/modules/todosSlice";
+import { __addTodo, __getTodos } from "../redux/modules/todosSlice";
 
 const Write = () => {
-  const [todos, setTodos] = useState({ user: "", title: "", body: "" });
+  const [todo, setTodo] = useState({ user: "", title: "", body: "" });
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -13,22 +13,24 @@ const Write = () => {
 
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
-    setTodos({
-      ...todos,
+    setTodo({
+      ...todo,
       [name]: value,
     });
-    console.log(todos); // input값 확인용
+    console.log(todo); // input값 확인용
   };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if (
-      todos.user.trim() === "" ||
-      todos.title.trim() === "" ||
-      todos.body.trim() === ""
+      todo.user.trim() === "" ||
+      todo.title.trim() === "" ||
+      todo.body.trim() === ""
     ) {
       return alert("모든 항목을 입력해주세요.");
     }
+    dispatch(__addTodo(todo));
+    setTodo({ title: "", body: "", user: "" });
   };
 
   return (
@@ -41,7 +43,7 @@ const Write = () => {
           <input
             type="text"
             name="user"
-            value={todos.user}
+            value={todo.user}
             placeholder="이름을 입력해주세요."
             maxLength={5}
             onChange={onChangeHandler}
@@ -50,7 +52,7 @@ const Write = () => {
           <input
             type="text"
             name="title"
-            value={todos.title}
+            value={todo.title}
             placeholder="제목을 입력해주세요."
             maxLength={10}
             onChange={onChangeHandler}
@@ -59,13 +61,15 @@ const Write = () => {
           <input
             type="text"
             name="body"
-            value={todos.body}
+            value={todo.body}
             placeholder="내용을 입력해주세요."
             maxLength={200}
             onChange={onChangeHandler}
           ></input>
+          <div>
+            <button>추가하기</button>
+          </div>
         </form>
-        <button>추가하기</button>
       </div>
     </div>
   );

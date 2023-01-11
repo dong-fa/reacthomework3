@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Header from "../components/Header";
 import { useSelector, useDispatch } from "react-redux";
 import { __getTodos } from "../redux/modules/todosSlice";
+import TodoCard from "../components/TodoCard";
 
 const List = () => {
   const dispatch = useDispatch();
@@ -24,16 +25,10 @@ const List = () => {
       <Header />
       <div>
         <h1>게시판</h1>
-        <div>
-          {todos.map((todo) => (
-            <div type="button" key={todo.id}>
-              {todo.user}
-              {todo.title}
-              {todo.body}
-            </div>
-          ))}
-        </div>
       </div>
+      {todos.map((todo) => (
+        <TodoCard key={todo.id} todo={todo} />
+      ))}
     </div>
   );
 };
