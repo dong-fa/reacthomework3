@@ -33,6 +33,19 @@ export const __addTodo = createAsyncThunk(
     }
   }
 );
+export const __deleteTodos = createAsyncThunk(
+  "deleteTodos",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.delete(`http://localhost:3001/todos/${payload}`);
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 const todosSlice = createSlice({
   name: "todos",
@@ -58,6 +71,15 @@ const todosSlice = createSlice({
       state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
       state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
     },
+    [__deleteTodos.fulfilled]: (state, action) => {
+      const target = state.todos.findIndex(
+        (comment) => comment.id === action.payload
+      );
+
+      state.todos.splice(target, 1);
+    },
+    [__deleteTodos.rejected]: () => {},
+    [__deleteTodos.pending]: () => {},
   },
 });
 

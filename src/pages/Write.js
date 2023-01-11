@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import { useDispatch } from "react-redux";
 import { __addTodo, __getTodos } from "../redux/modules/todosSlice";
+import { useNavigate } from "react-router-dom";
 
 const Write = () => {
   const [todo, setTodo] = useState({ user: "", title: "", body: "" });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(__getTodos());
@@ -31,6 +33,7 @@ const Write = () => {
     }
     dispatch(__addTodo(todo));
     setTodo({ title: "", body: "", user: "" });
+    navigate(`/list`);
   };
 
   return (
