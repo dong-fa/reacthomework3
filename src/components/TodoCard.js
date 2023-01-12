@@ -28,7 +28,6 @@ const TodoCard = ({ todo }) => {
     >
       <StTextBox>
         <h2>{todo.title}</h2>
-        <div></div>
         <button onClick={onDeleteHandler}>삭제</button>
       </StTextBox>
       <div>작성자 : {todo.user}</div>

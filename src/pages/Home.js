@@ -9,25 +9,25 @@ const Home = () => {
     <div>
       <Header />
       <HomeContainer>
-        <div>Home</div>
         <div>
+          <h1>환장의 투두</h1>
           <div>
-            <button
+            <Writebtn
               onClick={() => {
                 navigate("/write");
               }}
             >
               작성하기
-            </button>
+            </Writebtn>
           </div>
           <div>
-            <button
+            <Writebtn
               onClick={() => {
                 navigate("/list");
               }}
             >
               게시판 가기
-            </button>
+            </Writebtn>
           </div>
         </div>
       </HomeContainer>
@@ -41,8 +41,22 @@ const HomeContainer = styled.div`
   border: 1px solid black;
   margin-top: 50px;
   display: flex;
+  justify-content: center;
 
   height: calc(100vh - 45px);
 
   display: flex;
+`;
+const Writebtn = styled.div`
+  border: 1px solid black;
+  margin: 20px auto;
+
+  height: 100px;
+  width: 500px;
+
+  font-size: 30px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

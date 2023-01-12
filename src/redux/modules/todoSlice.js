@@ -11,7 +11,9 @@ export const __getTodos = createAsyncThunk(
   "getTodos",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get("http://localhost:3001/todos");
+      const data = await axios.get(
+        `${"http://localhost:3001"}/todos/${payload}`
+      );
       console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -20,8 +22,21 @@ export const __getTodos = createAsyncThunk(
     }
   }
 );
+//업데이트 성크 복사함
+export const __updateTodo = createAsyncThunk(
+  "updateTodo",
+  async (payload, thunkAPI) => {
+    try {
+      axios.patch(`${"http://localhost:3001"}/todos/${payload}`, payload);
+      console.log(payload);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
+    }
+  }
+);
 
-const todoSlice = createSlice({
+export const todoSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {
@@ -46,6 +61,19 @@ const todoSlice = createSlice({
       state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
       state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
     },
+    //여기서 부터 아래까지 복사
+    [__updateTodo.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.todo = action.payload;
+    },
+    [__updateTodo.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__updateTodo.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // 여기서부터 위까지 복사
   },
 });
 

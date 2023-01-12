@@ -47,7 +47,7 @@ export const __deleteTodos = createAsyncThunk(
   }
 );
 
-const todosSlice = createSlice({
+export const todosSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {},
