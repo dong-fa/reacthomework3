@@ -10,7 +10,7 @@ const Home = () => {
       <Header />
       <HomeContainer>
         <div>
-          <h1>환장의 투두</h1>
+          <h1>환장의 투두 </h1>
           <div>
             <Writebtn
               onClick={() => {
