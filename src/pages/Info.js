@@ -12,7 +12,7 @@ import {
 const Info = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const todo = useSelector((state) => state.todo.todo);
+  const todo = useSelector((state) => state.todo.todos);
   console.log(todo);
   const dispatch = useDispatch();
   // const info = todo.find((info) => info.id === parseInt(id));
